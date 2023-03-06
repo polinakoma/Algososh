@@ -1,0 +1,12 @@
+.form {
+  composes: form from '../string/string.module.css';
+  width: 829px;
+}
+
+.input {
+  composes: input from '../string/string.module.css';
+}
+
+.list {
+  composes: list from '../fibonacci-page/fibonacci-page.module.css';
+}
