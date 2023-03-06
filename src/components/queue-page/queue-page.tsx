@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import React, { FormEvent, useMemo, useState } from "react";
 import styles from './queue-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -42,7 +42,7 @@ export const QueuePage: React.FC = () => {
       setAddButton(true)
       return;
     };
-    setButtonState(false);
+    setButtonState(true);
     setAddLoader(true);
 
     queue.enqueue(num);
@@ -61,11 +61,13 @@ export const QueuePage: React.FC = () => {
 
     setNumber('');
     setAddButton(true);
+    setButtonState(false);
     setAddLoader(false);
   };
 
   const handleDeleteNumber = async () => {
     setDeleteLoader(true);
+    setButtonState(true);
 
     if (queue.getHead() === queue.getTail()) {
       handleResetQueue();
@@ -82,17 +84,18 @@ export const QueuePage: React.FC = () => {
     setArray([...array]);
 
     setDeleteLoader(false);
+    setButtonState(false);
   };
 
   const handleResetQueue = async () => {
     setClearLoader(true);
+    setButtonState(true);
 
     queue.clear();
     setArray(initialQueue);
     await setAnimation(SHORT_DELAY_IN_MS);
 
     setClearLoader(false);
-    setButtonState(true);
   };
 
   return (

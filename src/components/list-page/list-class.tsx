@@ -1,4 +1,5 @@
 import { ILinkedList } from "../../types/componentsTypes";
+import { randomArr } from "../../utils/utils";
 
 export class LinkedListNode<T> {
   value: T;
@@ -13,9 +14,9 @@ export class LinkedList<T> implements ILinkedList<T> {
    head: LinkedListNode<T> | null;
    size: number;
 
-  constructor(values?: T[]) { 
+  constructor(arrStr: T[]) { 
     this.head = null;
-    this.size = 4;
+    this.size = randomArr().length;
   };
 
   append(value: T) {

@@ -30,8 +30,8 @@ export const StackPage: React.FC = () => {
   };
 
   const handleAddToStack = async () => {
-    setButtonState(false);
     setAddLoader(true);
+    setButtonState(true)
 
     stack.push(value);
     array.push({
@@ -45,11 +45,13 @@ export const StackPage: React.FC = () => {
 
     setArray([...array]);
     setAddLoader(false);
+    setButtonState(false);
     setValue('')
   };
 
   const handleDeleteNumber = async () => {
     setDeleteLoader(true);
+    setButtonState(true);
 
     array[array.length - 1].state = ElementStates.Changing;
     await setAnimation(SHORT_DELAY_IN_MS);
@@ -58,18 +60,19 @@ export const StackPage: React.FC = () => {
     array.pop();
     setArray([...array])
 
+    setButtonState(false);
     setDeleteLoader(false);
   };
 
   const handleClearStack = async () => {
     setClearLoader(true);
+    setButtonState(true);
 
     await setAnimation(SHORT_DELAY_IN_MS);
     stack.clear();
     setArray([]);
 
     setClearLoader(false);
-    setButtonState(true);
   };
   
   return (

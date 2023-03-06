@@ -10,11 +10,11 @@ export const swap = (arr: INumbersArray[], firstIndex: number, secondIndex: numb
 };
 
 export const randomArr = () => {
-  let arr: number[] = [];
+  let arr = [];
   let count = Math.floor(Math.random() * (6 - 3) + 3);
 
   for(let i = 0; i < count; i++) {
-    arr.push((Math.round(Math.random() * (100 - 0) + 0)));
+    arr.push((Math.round(Math.random() * (100 - 0) + 0)).toString());
   };
   return arr;
 };

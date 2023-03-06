@@ -13,16 +13,15 @@ import { SHORT_DELAY_IN_MS } from "../../utils/constants/delays";
 
 export const ListPage: React.FC = () => {
 
-  const arrNum = (randomArr());
-  const arrStr = arrNum.map(String);
-  const initialList: IListSymbols[] = arrStr.map(symbol => ({
+  const initialList: IListSymbols[] = randomArr().map(symbol => ({
     symbol: symbol,
     state: ElementStates.Default,
     head: null,
     tail: null,
   }));
 
-  const list = useMemo(() => new LinkedList<string>(arrStr), []);
+  const list = useMemo(() => new LinkedList<string>(randomArr()), []);
+
 
   const [value, setValue] = useState(''); 
   const [ind, setInd] = useState(''); 
@@ -32,21 +31,34 @@ export const ListPage: React.FC = () => {
   const [addTailLoader, setAddTailLoader] = useState(false); 
   const [deleteHeadLoader, setDeleteHeadLoader] = useState(false); 
   const [deleteTailLoader, setDeleteTailLoader] = useState(false); 
+
+  const [valueButtonState, setValueButtonState] = useState(true);
+  const [indButtonState, setIndButtonState] = useState(true);
+
   const [addByIdx, setAddByIdx] = useState(false); 
   const [deleteByIdx, setDeleteByIdx] = useState(false); 
 
   const handleChangeInputValue = (evt: ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
-    setValue(evt.currentTarget.value);
+    const value = evt.currentTarget.value;
+    value ? setValueButtonState(false) : setValueButtonState(true);
+    setValue(value);
   };
 
   const handleChangeInputInd = (evt: ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
-    setInd(evt.currentTarget.value);
+    const value = evt.currentTarget.value;
+    value ? setIndButtonState(false) : setIndButtonState(true);
+    const numValue = Number(evt.currentTarget.value);
+    if(numValue < 0 || numValue > array.length - 1) {
+      setIndButtonState(true);
+    };
+    setInd(value);
   };
 
   const handleAddHead = async () => {
     setAddHeadLoader(true);
+    setValueButtonState(true);
 
     array[0].head = null;
     array[0].smallCircle = {
@@ -68,10 +80,12 @@ export const ListPage: React.FC = () => {
 
     setValue('');
     setAddHeadLoader(false);
+    setValueButtonState(true);
   };
 
   const handleAddTail = async () => {
     setAddTailLoader(true);
+    setValueButtonState(true);
 
     array[array.length - 1].smallCircle = {
       symbol: value,
@@ -92,10 +106,12 @@ export const ListPage: React.FC = () => {
 
     setValue('');
     setAddTailLoader(false);
+    setValueButtonState(true);
   };
 
   const handleDeleteHead = async() => {
     setDeleteHeadLoader(true);
+    setValueButtonState(true);
 
     if(!list.getHead()) {
       throw new Error ('List is empty');
@@ -112,11 +128,13 @@ export const ListPage: React.FC = () => {
     };
     setArray([...array]);
 
-    setDeleteHeadLoader(false)
+    setDeleteHeadLoader(false);
+    setValueButtonState(false);
   };
 
   const handleDeleteTail = async () => {
     setDeleteTailLoader(true);
+    setValueButtonState(true);
 
     if(!list.getHead()) {
       throw new Error ('List is empty');
@@ -133,12 +151,15 @@ export const ListPage: React.FC = () => {
     };
     setArray([...array]);
 
-    setDeleteTailLoader(false)
+    setDeleteTailLoader(false);
+    setValueButtonState(false);
   };
 
 
   const handleAddByIndex = async () => {
     setAddByIdx(true);
+    setIndButtonState(true);
+    setValueButtonState(true);
 
     let index = Number(ind);
     list.addByIndex(value, index);
@@ -159,17 +180,20 @@ export const ListPage: React.FC = () => {
     array.splice(index, 0, { symbol: value, state: ElementStates.Modified});
     setArray([...array]);
     array.map((num: IListSymbols) => {
-      num.state = ElementStates.Default;
+      return num.state = ElementStates.Default;
     });
     await setAnimation(SHORT_DELAY_IN_MS);
 
     setInd('');
     setValue('');
     setAddByIdx(false);
+    setIndButtonState(true);
+    setValueButtonState(true);
   };
 
   const handleDeleteByIndex = async () => {
     setDeleteByIdx(true);
+    setIndButtonState(true);
 
     let index = Number(ind);
     list.deleteByIndex(index);
@@ -191,13 +215,14 @@ export const ListPage: React.FC = () => {
     array.splice(index, 1);
     setArray([...array]);
     array.map((num: IListSymbols) => {
-      num.state = ElementStates.Default;
+      return num.state = ElementStates.Default;
     });
     await setAnimation(SHORT_DELAY_IN_MS);
     
     setInd('');
     setValue('');
     setDeleteByIdx(false);
+    setIndButtonState(true);
    };
 
   return (
@@ -216,25 +241,29 @@ export const ListPage: React.FC = () => {
             type={'button'} 
             onClick={handleAddHead}
             extraClass={styles.buttonSmall}
-            isLoader={addHeadLoader}/>
+            isLoader={addHeadLoader}
+            disabled={valueButtonState}/>
           <Button 
             text={'Добавить в tail'} 
             type={'button'} 
             onClick={handleAddTail}
             extraClass={styles.buttonSmall}
-            isLoader={addTailLoader}/>
+            isLoader={addTailLoader}
+            disabled={valueButtonState}/>
           <Button 
             text={'Удалить из head'} 
             type={'button'} 
             onClick={handleDeleteHead}
             extraClass={styles.buttonSmall}
-            isLoader={deleteHeadLoader}/>
+            isLoader={deleteHeadLoader}
+            disabled={valueButtonState}/>
           <Button 
             text={'Удалить из tail'} 
             type={'button'} 
             onClick={handleDeleteTail}
             extraClass={styles.buttonSmall}
-            isLoader={deleteTailLoader}/>
+            isLoader={deleteTailLoader}
+            disabled={valueButtonState}/>
         </div>
         <div className={styles.set}>
           <Input 
@@ -248,13 +277,15 @@ export const ListPage: React.FC = () => {
             type={'button'} 
             onClick={handleAddByIndex}
             extraClass={styles.buttonBig}
-            isLoader={addByIdx}/>
+            isLoader={addByIdx}
+            disabled={indButtonState}/>
           <Button 
             text={'Удалить по индексу'} 
             type={'button'} 
             onClick={handleDeleteByIndex}
             extraClass={styles.buttonBig}
-            isLoader={deleteByIdx}/>
+            isLoader={deleteByIdx}
+            disabled={indButtonState}/>
         </div>
         <ul className={styles.list}>
 
