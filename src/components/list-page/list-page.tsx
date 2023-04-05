@@ -22,7 +22,6 @@ export const ListPage: React.FC = () => {
 
   const list = useMemo(() => new LinkedList<string>(randomArr()), []);
 
-
   const [value, setValue] = useState(''); 
   const [ind, setInd] = useState(''); 
   const [array, setArray] = useState<IListSymbols[]>(initialList); 
@@ -242,28 +241,32 @@ export const ListPage: React.FC = () => {
             onClick={handleAddHead}
             extraClass={styles.buttonSmall}
             isLoader={addHeadLoader}
-            disabled={valueButtonState}/>
+            disabled={valueButtonState}
+            id={'Добавить в head'}/>
           <Button 
             text={'Добавить в tail'} 
             type={'button'} 
             onClick={handleAddTail}
             extraClass={styles.buttonSmall}
             isLoader={addTailLoader}
-            disabled={valueButtonState}/>
+            disabled={valueButtonState}
+            id={'Добавить в tail'}/>
           <Button 
             text={'Удалить из head'} 
             type={'button'} 
             onClick={handleDeleteHead}
             extraClass={styles.buttonSmall}
             isLoader={deleteHeadLoader}
-            disabled={valueButtonState}/>
+            disabled={valueButtonState}
+            id={'Удалить из head'}/>
           <Button 
             text={'Удалить из tail'} 
             type={'button'} 
             onClick={handleDeleteTail}
             extraClass={styles.buttonSmall}
             isLoader={deleteTailLoader}
-            disabled={valueButtonState}/>
+            disabled={valueButtonState}
+            id={'Удалить из tail'}/>
         </div>
         <div className={styles.set}>
           <Input 
@@ -278,14 +281,16 @@ export const ListPage: React.FC = () => {
             onClick={handleAddByIndex}
             extraClass={styles.buttonBig}
             isLoader={addByIdx}
-            disabled={indButtonState}/>
+            disabled={indButtonState}
+            id='Добавить по индексу'/>
           <Button 
             text={'Удалить по индексу'} 
             type={'button'} 
             onClick={handleDeleteByIndex}
             extraClass={styles.buttonBig}
             isLoader={deleteByIdx}
-            disabled={indButtonState}/>
+            disabled={indButtonState}
+            id='Удалить по индексу'/>
         </div>
         <ul className={styles.list}>
 

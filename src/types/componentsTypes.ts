@@ -1,4 +1,5 @@
 import { ElementStates } from "./element-states";
+import { randomArr } from "../utils/utils";
 
 // string
 export interface ISymbolsStep {
