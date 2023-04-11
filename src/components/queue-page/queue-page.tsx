@@ -100,7 +100,10 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Очередь">
-      <div className={styles.form}> 
+      <form className={styles.form} onSubmit={(e) => {
+        e.preventDefault();
+        handleAddNumber();
+        }}> 
         <div className={styles.input}>
           <Input 
             isLimitText 
@@ -110,18 +113,18 @@ export const QueuePage: React.FC = () => {
             onChange={handleChangeInput}/>
           <Button 
             text={'Добавить'} 
-            type='button' 
+            type='submit' 
             disabled={addButton} 
-            onClick={handleAddNumber}
             isLoader={addLoader}/>
           <Button 
-            text={'Удалить'} type='button' 
+            text={'Удалить'} 
+            type='button' 
             disabled={buttonState} 
             onClick={handleDeleteNumber}
             isLoader={deleteLoader}/>
           <Button 
             text={'Очистить'} 
-            type='button' 
+            type='reset' 
             disabled={buttonState} 
             onClick={handleResetQueue}
             extraClass='ml-35'
@@ -145,6 +148,6 @@ export const QueuePage: React.FC = () => {
           )}
 
         </ul>
-      </div>
+      </form>
     </SolutionLayout>
   )};

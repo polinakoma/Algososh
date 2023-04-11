@@ -31,16 +31,19 @@
   align-items: center;
   gap: 25px;
   position: relative;
+  border-color: rgb(0, 50, 255);
 }
 
 .smallCircle {
   position: absolute;
   top: -65px;
   left: 11px;
+  border-color: rgb(210, 82, 225);
 }
 
 .smallCircleBottom {
   position: absolute;
   top: 117px;
   left: 12px;
+  border-color: rgb(210, 82, 225);
 }

@@ -7,8 +7,9 @@ import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
 import { ElementStates } from "../../types/element-states";
 import { INumbersArray } from "../../types/componentsTypes";
-import { DELAY_IN_MS } from "../../utils/constants/delays";
-import { setAnimation, swap } from "../../utils/utils";
+import { selectionSort, bubbleSort } from "./utils";
+import { ASCENDING_SELECTION, DESCENDING_SELECTION, ASCENDING_BUBBLE, 
+DESCENDING_BUBBLE } from '../../utils/utils';
 
 export const SortingPage: React.FC = () => {
 
@@ -39,29 +40,12 @@ export const SortingPage: React.FC = () => {
   };
 
   // сортировка выбором
-  const ascendingChoosing: string = 'arr[i].num > arr[j].num';
-  const descendingChoosing: string = 'arr[i].num < arr[j].num';
-
   const getSelectionSort = async (arr:  INumbersArray[], type: string, 
     loader: Dispatch<React.SetStateAction<boolean>>) => {
     loader(true);
     setDiasbleState(true);
 
-    for(let i = 0; i < arr.length; i++) {
-      for(let j = i; j < arr.length; j++) {
-        arr[i].state = ElementStates.Changing;
-        arr[j].state = ElementStates.Changing;
-        setArray([...arr]);
-        await setAnimation(DELAY_IN_MS);
-        if(eval(type)) {
-          arr[j].state = ElementStates.Changing;
-          swap(arr, i, j);
-        };
-        arr[j].state = ElementStates.Default;
-        arr[i].state = ElementStates.Modified;
-        setArray([...arr]);
-      };
-    };
+    selectionSort(arr, type, setArray);
 
     loader(false);
     setDiasbleState(false);
@@ -69,31 +53,12 @@ export const SortingPage: React.FC = () => {
   };
 
    // сортировка пузырьком
-   const ascendingBubble: string = 'arr[i].num > arr[i + 1].num';
-   const descendingBubble: string = 'arr[i].num < arr[i + 1].num';
- 
    const getBubbleSort = async (arr: INumbersArray[], type: string,
   loader: Dispatch<React.SetStateAction<boolean>>) => {
     loader(true);
     setDiasbleState(true);
 
-     for (let j = 0; j < arr.length; j++) {
-        for (let i = 0; i < arr.length - j - 1; i++) {
-          arr[i].state = ElementStates.Changing;
-          arr[i + 1].state = ElementStates.Changing;
-          setArray(array);
-          await setAnimation(DELAY_IN_MS);
-          if (eval(type)) {
-            swap(arr, i, i + 1);
-          };
-          arr[i].state = ElementStates.Default;
-          arr[i + 1].state = ElementStates.Default;
-            setArray([...arr]);
-        }
-        arr[arr.length - j - 1].state = ElementStates.Modified;
-        setArray([...arr]);
-        await setAnimation(DELAY_IN_MS);
-     };
+    bubbleSort(arr, type, setArray);
 
      loader(false);
      setDiasbleState(false);
@@ -104,9 +69,9 @@ export const SortingPage: React.FC = () => {
     evt.preventDefault();
     setSortingType(Direction.Ascending);
     if(sortingMethod === 'sorting') {
-      getSelectionSort(array, ascendingChoosing, setLoaderAscending);
+      getSelectionSort(array, ASCENDING_SELECTION, setLoaderAscending);
     } else if (sortingMethod === 'bubble') {
-      getBubbleSort(array, ascendingBubble, setLoaderAscending)
+      getBubbleSort(array, ASCENDING_BUBBLE, setLoaderAscending)
     };
   };
 
@@ -114,9 +79,9 @@ export const SortingPage: React.FC = () => {
     evt.preventDefault();
     setSortingType(Direction.Descending);
     if(sortingMethod === 'sorting') {
-      getSelectionSort(array, descendingChoosing, setLoaderDescending)
+      getSelectionSort(array, DESCENDING_SELECTION, setLoaderDescending)
     } else if (sortingMethod === 'bubble') {
-      getBubbleSort(array, descendingBubble, setLoaderDescending)
+      getBubbleSort(array, DESCENDING_BUBBLE, setLoaderDescending)
     };
   };
 
