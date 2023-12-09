@@ -39,7 +39,7 @@ https://www.figma.com/file/RIkypcTQN5d37g7RRTFid0/Algososh_external_link?node-id
 </div>
 
 # Как запустить:
-1. Клонируйте репозиторий
+1. Клонируйте репозиторий git clone https://github.com/polinakoma/Algososh.git
 2. Установите зависимости командой npm i
 3. Запустите проект командой npm start
 4. Переходите по адресу http://localhost:3000.
