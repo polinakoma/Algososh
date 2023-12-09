@@ -2,7 +2,8 @@
 
 В проектной работе реализован визуализатор алгоритмов. Эта проектная работа заточена на анимацию и поэтапное отображение работы алгоритма, что позволяет детальнее понять каждый шаг его работы.
 
-# Ссылка на макет в Figma: https://www.figma.com/file/RIkypcTQN5d37g7RRTFid0/Algososh_external_link?node-id=0%3A1
+# Ссылка на макет в Figma: 
+https://www.figma.com/file/RIkypcTQN5d37g7RRTFid0/Algososh_external_link?node-id=0%3A1
 
 ### Описание задач проектной работы:
 # Строка
