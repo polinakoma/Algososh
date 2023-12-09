@@ -37,3 +37,10 @@ https://www.figma.com/file/RIkypcTQN5d37g7RRTFid0/Algososh_external_link?node-id
   <p>async TS</p>
   <p>TSX</p>
 </div>
+
+# Как запустить:
+1. Клонируйте репозиторий
+2. Установите зависимости командой npm i
+3. Запустите проект командой npm start
+4. Переходите по адресу http://localhost:3000.
+
